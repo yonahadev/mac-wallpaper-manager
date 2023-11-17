@@ -23,6 +23,9 @@ struct ContentView: View {
                 let display = getScreenByName(selectedScreen)
                 manageNewWallpaper(display)
             } .disabled(selectedScreen == "None")
+            Button("get wallpapers") {
+                parseFolder()
+            }
         }
         .padding()
         .pickerStyle(.segmented)
@@ -33,6 +36,64 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+}
+
+
+let validFileExtensions: Set = [".jpg",".jpeg",".tiff",".gif",".bmp",".pdf",".tif",".png"]
+
+
+func parseFolder() {
+    chooseFolder { (folder) in
+        if let filePath = folder {
+            getWallpapers(filePath:filePath)
+        } else {
+            print("Failed to parse folder")
+        }
+    }
+}
+
+func chooseFolder(completionHandler: @escaping (URL?) -> Void) {
+    let openPanel = NSOpenPanel()
+    openPanel.canChooseFiles = false
+    openPanel.canChooseDirectories = true
+    openPanel.allowsMultipleSelection = false
+
+    openPanel.begin { (result) in
+        if result == .OK, let chosenURL = openPanel.url {
+            completionHandler(chosenURL)
+        } else {
+            completionHandler(nil)
+        }
+    }
+}
+
+
+func getWallpapers(filePath: URL) {
+        do {
+            let directory = filePath.path()
+            print(directory)
+            let files = try FileManager.default.contentsOfDirectory(atPath:directory)
+            filterFiles(fileNames:files, directory: directory)
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+
+func filterFiles(fileNames:[String],directory:String) {
+    var finalFiles:[String] = []
+    for file in fileNames {
+        print(file)
+        for fileType in validFileExtensions {
+            print(fileType)
+            if file.contains(fileType) {
+                let fullFilesName = directory+file
+                finalFiles.append(fullFilesName)
+                break
+            }
+        }
+    }
+    print(finalFiles)
 }
 
 //brings up file window to choose one file
