@@ -9,7 +9,9 @@ import SwiftUI
 
 
 struct ContentView: View {
-    @State var selectedScreen: String = "None"
+    @State var selectedScreen: String = getScreenByIndex(1).localizedName
+    @State var imageFiles: [String] = []
+    @State var selectedWallpaper: String = "None"
     var body: some View {
         VStack {
             Picker("Screen", selection:$selectedScreen) {
@@ -18,13 +20,29 @@ struct ContentView: View {
                     Text(screen.localizedName).tag(screen.localizedName)
                 }
             }
+            Picker("Wallpaper", selection:$selectedWallpaper) {
+                //self tells swift each element is unique allowing the for each
+                ForEach(imageFiles, id: \.self) { file in
+                    Text(file)
+                } .onChange(of: selectedWallpaper) {
+                    let url = URL(fileURLWithPath:selectedWallpaper)
+                    let display = getScreenByName(selectedScreen)
+                    let status = setWallpaper(url: url, screen: display)
+                    print (status)
+                }
+            }
             Text("Selected screen: \(selectedScreen)" )
             Button("set wallpaper") {
                 let display = getScreenByName(selectedScreen)
                 manageNewWallpaper(display)
             } .disabled(selectedScreen == "None")
             Button("get wallpapers") {
-                parseFolder()
+                parseFolder { (newFiles) in
+                    for file in newFiles  {
+                        imageFiles.append(file)
+                    }
+                    print(imageFiles)
+                }
             }
         }
         .padding()
@@ -42,14 +60,22 @@ struct ContentView: View {
 let validFileExtensions: Set = [".jpg",".jpeg",".tiff",".gif",".bmp",".pdf",".tif",".png"]
 
 
-func parseFolder() {
+func parseFolder(completionHandler: @escaping ([String]) -> Void)  {
+    var files:[String] = []
     chooseFolder { (folder) in
         if let filePath = folder {
-            getWallpapers(filePath:filePath)
+            let filteredFiles = getWallpapers(filePath:filePath)
+            print("Filtered files:",filteredFiles)
+            for file in filteredFiles {
+                files.append(file)
+            }
+            completionHandler(files)
         } else {
             print("Failed to parse folder")
+            completionHandler([])
         }
     }
+
 }
 
 func chooseFolder(completionHandler: @escaping (URL?) -> Void) {
@@ -68,24 +94,22 @@ func chooseFolder(completionHandler: @escaping (URL?) -> Void) {
 }
 
 
-func getWallpapers(filePath: URL) {
+func getWallpapers(filePath: URL) -> [String] {
         do {
             let directory = filePath.path()
-            print(directory)
             let files = try FileManager.default.contentsOfDirectory(atPath:directory)
-            filterFiles(fileNames:files, directory: directory)
+            return filterFiles(fileNames:files, directory: directory)
         }
         catch {
             print(error.localizedDescription)
+            return []
         }
     }
 
-func filterFiles(fileNames:[String],directory:String) {
+func filterFiles(fileNames:[String],directory:String) -> [String] {
     var finalFiles:[String] = []
     for file in fileNames {
-        print(file)
         for fileType in validFileExtensions {
-            print(fileType)
             if file.contains(fileType) {
                 let fullFilesName = directory+file
                 finalFiles.append(fullFilesName)
@@ -93,7 +117,7 @@ func filterFiles(fileNames:[String],directory:String) {
             }
         }
     }
-    print(finalFiles)
+    return finalFiles
 }
 
 //brings up file window to choose one file
