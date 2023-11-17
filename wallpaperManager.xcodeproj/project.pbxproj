@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		E2C98CED2B07788700B76478 /* wallpaperManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */; };
-		E2C98CEF2B07788700B76478 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C98CEE2B07788700B76478 /* ContentView.swift */; };
 		E2C98CF12B07788800B76478 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C98CF02B07788800B76478 /* Assets.xcassets */; };
 		E2C98CF42B07788800B76478 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C98CF32B07788800B76478 /* Preview Assets.xcassets */; };
 		E2C98CFF2B07788800B76478 /* wallpaperManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C98CFE2B07788800B76478 /* wallpaperManagerTests.swift */; };
 		E2C98D092B07788900B76478 /* wallpaperManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C98D082B07788900B76478 /* wallpaperManagerUITests.swift */; };
 		E2C98D0B2B07788900B76478 /* wallpaperManagerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C98D0A2B07788900B76478 /* wallpaperManagerUITestsLaunchTests.swift */; };
+		E2C98D182B0786F000B76478 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C98D172B0786F000B76478 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,6 @@
 /* Begin PBXFileReference section */
 		E2C98CE92B07788700B76478 /* wallpaperManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wallpaperManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallpaperManagerApp.swift; sourceTree = "<group>"; };
-		E2C98CEE2B07788700B76478 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E2C98CF02B07788800B76478 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2C98CF32B07788800B76478 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E2C98CF52B07788800B76478 /* wallpaperManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallpaperManager.entitlements; sourceTree = "<group>"; };
@@ -45,6 +44,7 @@
 		E2C98D042B07788900B76478 /* wallpaperManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wallpaperManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C98D082B07788900B76478 /* wallpaperManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallpaperManagerUITests.swift; sourceTree = "<group>"; };
 		E2C98D0A2B07788900B76478 /* wallpaperManagerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallpaperManagerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E2C98D172B0786F000B76478 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,7 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */,
-				E2C98CEE2B07788700B76478 /* ContentView.swift */,
+				E2C98D172B0786F000B76478 /* ContentView.swift */,
 				E2C98CF02B07788800B76478 /* Assets.xcassets */,
 				E2C98CF52B07788800B76478 /* wallpaperManager.entitlements */,
 				E2C98CF22B07788800B76478 /* Preview Content */,
@@ -259,7 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2C98CEF2B07788700B76478 /* ContentView.swift in Sources */,
+				E2C98D182B0786F000B76478 /* ContentView.swift in Sources */,
 				E2C98CED2B07788700B76478 /* wallpaperManagerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
