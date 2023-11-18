@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var selectedScreen: String = getScreenByIndex(1).localizedName
+    @State var allScreens: Bool = false
     @State var imageFiles: [String] = []
     @State var selectedWallpaper: String = "None"
     var body: some View {
@@ -19,18 +20,27 @@ struct ContentView: View {
                 ForEach(NSScreen.screens, id: \.self) { screen in
                     Text(screen.localizedName).tag(screen.localizedName)
                 }
-            }
+            } .pickerStyle(.segmented)
+                .disabled(allScreens)
             Picker("Wallpaper", selection:$selectedWallpaper) {
                 //self tells swift each element is unique allowing the for each
                 ForEach(imageFiles, id: \.self) { file in
                     Text(file)
                 } .onChange(of: selectedWallpaper) {
+                    var status = ""
                     let url = URL(fileURLWithPath:selectedWallpaper)
-                    let display = getScreenByName(selectedScreen)
-                    let status = setWallpaper(url: url, screen: display)
+                    if allScreens == true {
+                        for screen in NSScreen.screens {
+                            status = setWallpaper(url: url, screen: screen)
+                        }
+                    } else {
+                        let display = getScreenByName(selectedScreen)
+                        status = setWallpaper(url: url, screen: display)
+                    }
                     print (status)
                 }
-            }
+            } .pickerStyle(.inline)
+            Toggle("All screens", isOn:$allScreens)
             Text("Selected screen: \(selectedScreen)" )
             Button("set wallpaper") {
                 let display = getScreenByName(selectedScreen)
@@ -46,7 +56,7 @@ struct ContentView: View {
             }
         }
         .padding()
-        .pickerStyle(.segmented)
+
     }
 }
 
