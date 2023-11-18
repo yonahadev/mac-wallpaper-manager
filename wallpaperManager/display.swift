@@ -41,7 +41,7 @@ func getScreenByName(_ currentDisplay: String) -> NSScreen {
 }
 
 func manageNewWallpaper(_ display:NSScreen) {
-    chooseFile { (result) in
+    chooseFiles { (result) in
         //if let to continue with the rest of the code conditionally
         if let url = result {
             let status = setWallpaper(url: url, screen: display)

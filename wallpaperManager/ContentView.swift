@@ -21,12 +21,31 @@ struct ContentView: View {
                     Text(screen.localizedName).tag(screen.localizedName)
                 }
             } .pickerStyle(.segmented)
+                .fixedSize()
                 .disabled(allScreens)
-            Picker("Wallpaper", selection:$selectedWallpaper) {
                 //self tells swift each element is unique allowing the for each
                 ForEach(imageFiles, id: \.self) { file in
-                    Text(file)
-                } .onChange(of: selectedWallpaper) {
+                    let url = URL(fileURLWithPath:file)
+                    let image = NSImage(byReferencing: url)
+
+                    Button {
+                        selectedWallpaper = file
+                    } label: {
+                        Image(nsImage:image)
+                    }
+                    Button("Delete") {
+                        for imageFile in imageFiles {
+                            var index = imageFiles.count-1
+                            if imageFile == file {
+                                imageFiles.remove(at: index)
+                                break
+                            }
+                            index -= 1
+                        }
+                    }
+                    
+                
+                .onChange(of: selectedWallpaper) {
                     var status = ""
                     let url = URL(fileURLWithPath:selectedWallpaper)
                     if allScreens == true {
@@ -48,10 +67,26 @@ struct ContentView: View {
             } .disabled(selectedScreen == "None")
             Button("get wallpapers") {
                 parseFolder { (newFiles) in
+                    var count: Int = 0
+                    var duplicateFiles: [String] = []
                     for file in newFiles  {
-                        imageFiles.append(file)
+                        var newFile = true
+                        for existingImage in imageFiles {
+                            if file == existingImage {
+                                count+=1
+                                duplicateFiles.append(file)
+                                newFile = false
+                                
+                            }
+                        }
+                        if newFile {
+                            imageFiles.append(file)
+                        }
                     }
-                    print(imageFiles)
+//                    print(imageFiles)
+                    if count != 0 {
+                        print("\(count) Duplicate files found",duplicateFiles)
+                    }
                 }
             }
         }
