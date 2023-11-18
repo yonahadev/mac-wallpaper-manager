@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E20AB9E02B08B0E5009C8C8F /* fileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AB9DF2B08B0E5009C8C8F /* fileSystem.swift */; };
+		E20AB9E42B08B169009C8C8F /* display.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AB9E32B08B169009C8C8F /* display.swift */; };
+		E20AB9E62B08B19A009C8C8F /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AB9E52B08B19A009C8C8F /* utils.swift */; };
 		E2C98CED2B07788700B76478 /* wallpaperManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */; };
 		E2C98CF12B07788800B76478 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C98CF02B07788800B76478 /* Assets.xcassets */; };
 		E2C98CF42B07788800B76478 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2C98CF32B07788800B76478 /* Preview Assets.xcassets */; };
@@ -34,6 +37,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E20AB9DF2B08B0E5009C8C8F /* fileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileSystem.swift; sourceTree = "<group>"; };
+		E20AB9E32B08B169009C8C8F /* display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = display.swift; sourceTree = "<group>"; };
+		E20AB9E52B08B19A009C8C8F /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		E2C98CE92B07788700B76478 /* wallpaperManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wallpaperManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallpaperManagerApp.swift; sourceTree = "<group>"; };
 		E2C98CF02B07788800B76478 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -97,9 +103,12 @@
 			children = (
 				E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */,
 				E2C98D172B0786F000B76478 /* ContentView.swift */,
+				E20AB9DF2B08B0E5009C8C8F /* fileSystem.swift */,
+				E20AB9E32B08B169009C8C8F /* display.swift */,
 				E2C98CF02B07788800B76478 /* Assets.xcassets */,
 				E2C98CF52B07788800B76478 /* wallpaperManager.entitlements */,
 				E2C98CF22B07788800B76478 /* Preview Content */,
+				E20AB9E52B08B19A009C8C8F /* utils.swift */,
 			);
 			path = wallpaperManager;
 			sourceTree = "<group>";
@@ -259,8 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E20AB9E62B08B19A009C8C8F /* utils.swift in Sources */,
 				E2C98D182B0786F000B76478 /* ContentView.swift in Sources */,
 				E2C98CED2B07788700B76478 /* wallpaperManagerApp.swift in Sources */,
+				E20AB9E02B08B0E5009C8C8F /* fileSystem.swift in Sources */,
+				E20AB9E42B08B169009C8C8F /* display.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
