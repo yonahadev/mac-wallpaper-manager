@@ -10,39 +10,34 @@ import SwiftUI
 
 func parseFolder(completionHandler: @escaping ([String]) -> Void)  {
     var files:[String] = []
-    chooseFolder { (folder) in
-        if let filePath = folder {
-            let filteredFiles = getWallpapers(filePath:filePath)
-            print("Filtered files:",filteredFiles)
-            for file in filteredFiles {
-                files.append(file)
+    chooseFolders { (folders) in
+        for folder in folders {
+                let filteredFiles = getWallpapers(filePath:folder)
+//                print("Filtered files:",filteredFiles)
+                for file in filteredFiles {
+                    files.append(file)
+                }
+                
             }
-            completionHandler(files)
-        } else {
-            print("Failed to parse folder")
-            completionHandler([])
+        completionHandler(files)
         }
     }
 
-}
 
-func chooseFolder(completionHandler: @escaping (URL?) -> Void) {
+func chooseFolders(completionHandler: @escaping ([URL]) -> Void) {
     let openPanel = NSOpenPanel()
     openPanel.canChooseFiles = false
     openPanel.canChooseDirectories = true
-    openPanel.allowsMultipleSelection = false
-
+    openPanel.allowsMultipleSelection = true
+    
     openPanel.begin { (result) in
-        if result == .OK, let chosenURL = openPanel.url {
-            completionHandler(chosenURL)
-        } else {
-            completionHandler(nil)
+        if result == .OK {
+            completionHandler(openPanel.urls)
         }
     }
 }
-
-
-func getWallpapers(filePath: URL) -> [String] {
+    
+    func getWallpapers(filePath: URL) -> [String] {
         do {
             let directory = filePath.path()
             let files = try FileManager.default.contentsOfDirectory(atPath:directory)
@@ -53,20 +48,20 @@ func getWallpapers(filePath: URL) -> [String] {
             return []
         }
     }
-
-//brings up file window to choose one file
-func chooseFile(completionHandler: @escaping (URL?) -> Void) {
-    let openPanel = NSOpenPanel()
-    openPanel.canChooseFiles = true
-    openPanel.canChooseDirectories = false
-    openPanel.allowsMultipleSelection = false
-    openPanel.allowedContentTypes = [.png,.jpeg,.tiff,.gif,.bmp,.pdf]
-
-    openPanel.begin { (result) in
-        if result == .OK, let chosenURL = openPanel.url {
-            completionHandler(chosenURL)
-        } else {
-            completionHandler(nil)
+    
+    //brings up file window to choose one file
+    func chooseFiles(completionHandler: @escaping (URL?) -> Void) {
+        let openPanel = NSOpenPanel()
+        openPanel.canChooseFiles = true
+        openPanel.canChooseDirectories = false
+        openPanel.allowsMultipleSelection = false
+        openPanel.allowedContentTypes = [.png,.jpeg,.tiff,.gif,.bmp,.pdf]
+        
+        openPanel.begin { (result) in
+            if result == .OK, let chosenURL = openPanel.url {
+                completionHandler(chosenURL)
+            } else {
+                completionHandler(nil)
+            }
         }
     }
-}
