@@ -12,14 +12,8 @@ struct ContentView: View {
     @State var selectedScreen: String = getScreenByIndex(1).localizedName
     @State var allScreens: Bool = false
     @State var imageFiles: [URL] = []
-    let workspace = NSWorkspace.shared
-    @State var selectedWallpaper: URL = {
-        if let existingWallpaper = NSWorkspace.shared.desktopImageURL(for: getScreenByIndex(1)) {
-            return existingWallpaper
-        } else {
-            fatalError("No existing wallpaper set")
-        }
-    }()
+    @State var finderOpen: Bool = false
+    @State var selectedIndex: Int = -1
         
     var body: some View {
         VStack {
@@ -32,31 +26,38 @@ struct ContentView: View {
                 .fixedSize()
                 .disabled(allScreens)
                 //self tells swift each element is unique allowing the for each
-            Picker("Wallpaper", selection: $selectedWallpaper) {
-                ForEach(imageFiles, id: \.self) { file in
-                    let image = NSImage(byReferencing: file)
-                    Image(nsImage:image)
-                        .resizable()
-                        .frame(width:50,height:50)
-                }
-                .onChange(of: selectedWallpaper) {
-                    do {
-                            if allScreens == true {
-                                for screen in NSScreen.screens {
-                                    try setWallpaper(url: selectedWallpaper, screen: screen)
+            let columns = [GridItem(.adaptive(minimum: 100))]
+            LazyVGrid(columns: columns) {
+                ForEach(Array(zip(imageFiles.indices,imageFiles)), id: \.0) { index, file in
+                        let image = NSImage(byReferencing: file)
+                    Button {
+                        selectedIndex = index
+                        do {
+                                if allScreens == true {
+                                    for screen in NSScreen.screens {
+                                        try setWallpaper(url: file, screen: screen)
+                                    }
+                                } else {
+                                    let display = getScreenByName(selectedScreen)
+                                    try setWallpaper(url: file, screen: display)
                                 }
-                            } else {
-                                let display = getScreenByName(selectedScreen)
-                                try setWallpaper(url: selectedWallpaper, screen: display)
-                            }
-                    } catch {
-                        print("Error changing wallpaper: \(error)")
-                    }
+                        } catch {
+                            print("Error changing wallpaper: \(error)")
+                        }
+                    } label: {
+                        Image(nsImage:image)
+                            .resizable()
+                            .frame(width:75,height:75)
+                            .aspectRatio(contentMode: .fit)
+                            .border(index == selectedIndex ? Color.blue : Color.gray, width: 2)
+                    } .buttonStyle(PlainButtonStyle())
                 }
-            }
+
+            } .frame(maxWidth: 800,maxHeight:100)
             Toggle("All screens", isOn:$allScreens)
             Text("Selected screen: \(selectedScreen)" )
             Button("get wallpapers") {
+                finderOpen = true
                 parseFolder { (newFiles) in
                     var count: Int = 0
                     var duplicateFiles: [URL] = []
@@ -74,10 +75,12 @@ struct ContentView: View {
                             imageFiles.append(file)
                         }
                     }
+                    finderOpen = false
                 }
-            }
+            }  .disabled(finderOpen)
         }
         .padding()
+
 
     }
 }

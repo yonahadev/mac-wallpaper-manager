@@ -36,6 +36,8 @@ func chooseFilesAndFolders(completionHandler: @escaping ([URL]) -> Void) {
     openPanel.begin { (result) in
         if result == .OK {
             completionHandler(openPanel.urls)
+        } else {
+            completionHandler([])
         }
     }
 }
