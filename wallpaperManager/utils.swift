@@ -10,13 +10,11 @@ import SwiftUI
 
 let validFileExtensions: Set = ["jpg","jpeg","tiff","gif","bmp","pdf","tif","png"]
 
-func setWallpaper(url:URL, screen:NSScreen) -> String {
+func setWallpaper(url:URL, screen:NSScreen) throws {
     do {
         try NSWorkspace.shared.setDesktopImageURL(url, for:screen)
-        return "Set desktop image."
     } catch {
-        print(error)
-        return "Failed to set wallpaper \(error.localizedDescription)."
+        throw error
     }
 }
 
