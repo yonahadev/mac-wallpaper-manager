@@ -11,8 +11,8 @@ import SwiftUI
 struct ContentView: View {
     @State var selectedScreen: String = getScreenByIndex(1).localizedName
     @State var allScreens: Bool = false
-    @State var imageFiles: [String] = []
-    @State var selectedWallpaper: String = "None"
+    @State var imageFiles: [URL] = []
+    @State var selectedWallpaper: URL?
     var body: some View {
         VStack {
             Picker("Screen", selection:$selectedScreen) {
@@ -25,14 +25,14 @@ struct ContentView: View {
                 .disabled(allScreens)
                 //self tells swift each element is unique allowing the for each
                 ForEach(imageFiles, id: \.self) { file in
-                    let url = URL(fileURLWithPath:file)
-                    let image = NSImage(byReferencing: url)
+                    let image = NSImage(byReferencing: file)
 
                     Button {
                         selectedWallpaper = file
                     } label: {
                         Image(nsImage:image)
-                    }
+                            .resizable()
+                    } .frame(width:50,height:50)
                     Button("Delete") {
                         for imageFile in imageFiles {
                             var index = imageFiles.count-1
@@ -47,28 +47,26 @@ struct ContentView: View {
                 
                 .onChange(of: selectedWallpaper) {
                     var status = ""
-                    let url = URL(fileURLWithPath:selectedWallpaper)
-                    if allScreens == true {
-                        for screen in NSScreen.screens {
-                            status = setWallpaper(url: url, screen: screen)
+                    if let wallpaper = selectedWallpaper {
+                        if allScreens == true {
+                            for screen in NSScreen.screens {
+                                status = setWallpaper(url: wallpaper, screen: screen)
+                            }
+                        } else {
+                            let display = getScreenByName(selectedScreen)
+                            status = setWallpaper(url: wallpaper, screen: display)
                         }
-                    } else {
-                        let display = getScreenByName(selectedScreen)
-                        status = setWallpaper(url: url, screen: display)
+                        
                     }
                     print (status)
                 }
             } .pickerStyle(.inline)
             Toggle("All screens", isOn:$allScreens)
             Text("Selected screen: \(selectedScreen)" )
-            Button("set wallpaper") {
-                let display = getScreenByName(selectedScreen)
-                manageNewWallpaper(display)
-            } .disabled(selectedScreen == "None")
             Button("get wallpapers") {
                 parseFolder { (newFiles) in
                     var count: Int = 0
-                    var duplicateFiles: [String] = []
+                    var duplicateFiles: [URL] = []
                     for file in newFiles  {
                         var newFile = true
                         for existingImage in imageFiles {
@@ -83,7 +81,6 @@ struct ContentView: View {
                             imageFiles.append(file)
                         }
                     }
-//                    print(imageFiles)
                     if count != 0 {
                         print("\(count) Duplicate files found",duplicateFiles)
                     }
