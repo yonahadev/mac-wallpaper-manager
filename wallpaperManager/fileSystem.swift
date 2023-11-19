@@ -8,27 +8,30 @@
 import Foundation
 import SwiftUI
 
-func parseFolder(completionHandler: @escaping ([String]) -> Void)  {
-    var files:[String] = []
-    chooseFolders { (folders) in
-        for folder in folders {
-                let filteredFiles = getWallpapers(filePath:folder)
-//                print("Filtered files:",filteredFiles)
+func parseFolder(completionHandler: @escaping ([URL]) -> Void)  {
+    var files:[URL] = []
+    chooseFilesAndFolders { (urls) in
+        for locator in urls {
+            if locator.hasDirectoryPath {
+                let filteredFiles = getWallpapers(filePath:locator)
                 for file in filteredFiles {
                     files.append(file)
                 }
+            } else {
+                files.append(locator)
+            }
                 
             }
         completionHandler(files)
         }
     }
 
-
-func chooseFolders(completionHandler: @escaping ([URL]) -> Void) {
+func chooseFilesAndFolders(completionHandler: @escaping ([URL]) -> Void) {
     let openPanel = NSOpenPanel()
-    openPanel.canChooseFiles = false
+    openPanel.canChooseFiles = true
     openPanel.canChooseDirectories = true
     openPanel.allowsMultipleSelection = true
+    openPanel.allowedContentTypes = [.jpeg,.gif,.png,.tiff,.bmp,.pdf]
     
     openPanel.begin { (result) in
         if result == .OK {
@@ -37,31 +40,19 @@ func chooseFolders(completionHandler: @escaping ([URL]) -> Void) {
     }
 }
     
-    func getWallpapers(filePath: URL) -> [String] {
-        do {
-            let directory = filePath.path()
-            let files = try FileManager.default.contentsOfDirectory(atPath:directory)
-            return filterFiles(fileNames:files, directory: directory)
-        }
-        catch {
-            print(error.localizedDescription)
-            return []
-        }
-    }
-    
-    //brings up file window to choose one file
-    func chooseFiles(completionHandler: @escaping (URL?) -> Void) {
-        let openPanel = NSOpenPanel()
-        openPanel.canChooseFiles = true
-        openPanel.canChooseDirectories = false
-        openPanel.allowsMultipleSelection = false
-        openPanel.allowedContentTypes = [.png,.jpeg,.tiff,.gif,.bmp,.pdf]
-        
-        openPanel.begin { (result) in
-            if result == .OK, let chosenURL = openPanel.url {
-                completionHandler(chosenURL)
-            } else {
-                completionHandler(nil)
+func getWallpapers(filePath: URL) -> [URL] {
+    var validUrls:[URL] = []
+    do {
+        let files = try FileManager.default.contentsOfDirectory(at: filePath, includingPropertiesForKeys: [.pathKey])
+        for file in files {
+            print(file.pathExtension)
+            if validFileExtensions.contains(file.pathExtension) {
+                validUrls.append(file)
             }
         }
     }
+    catch {
+        print(error.localizedDescription)
+    }
+    return validUrls
+}

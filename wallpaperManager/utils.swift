@@ -6,20 +6,38 @@
 //
 
 import Foundation
+import SwiftUI
 
-let validFileExtensions: Set = [".jpg",".jpeg",".tiff",".gif",".bmp",".pdf",".tif",".png"]
+let validFileExtensions: Set = ["jpg","jpeg","tiff","gif","bmp","pdf","tif","png"]
 
-
-func filterFiles(fileNames:[String],directory:String) -> [String] {
-    var finalFiles:[String] = []
-    for file in fileNames {
-        for fileType in validFileExtensions {
-            if file.contains(fileType) {
-                let fullFilesName = directory+file
-                finalFiles.append(fullFilesName)
-                break
-            }
-        }
+func setWallpaper(url:URL, screen:NSScreen) -> String {
+    do {
+        try NSWorkspace.shared.setDesktopImageURL(url, for:screen)
+        return "Set desktop image."
+    } catch {
+        print(error)
+        return "Failed to set wallpaper \(error.localizedDescription)."
     }
-    return finalFiles
+}
+
+func getScreenByIndex(_ index:Int) -> NSScreen {
+    let screens = NSScreen.screens
+    //checks to see for a valid index, if not sets screen to primary (0)
+    if index < screens.count {
+        return screens[index-1]
+    } else {
+        return screens[0]
+    }
+}
+
+func getScreenByName(_ currentDisplay: String) -> NSScreen {
+    let screens = NSScreen.screens
+    var screenIndex = 0
+    for screen in screens {
+        if screen.localizedName == currentDisplay {
+            return screens[screenIndex]
+        }
+        screenIndex += 1
+    }
+    return screens[0] //returns primary if can't find name
 }
