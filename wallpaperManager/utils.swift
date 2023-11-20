@@ -10,6 +10,38 @@ import SwiftUI
 
 let validFileExtensions: Set = ["jpg","jpeg","tiff","gif","bmp","pdf","tif","png"]
 
+func handleWallpaperChange(allScreens:Bool,image: URL, target: String) {
+    do {
+        if allScreens == true {
+            for screen in NSScreen.screens {
+                try setWallpaper(url: image, screen: screen)
+            }
+        } else {
+            let display = getScreenByName(target)
+            try setWallpaper(url: image, screen: display)
+        }
+    } catch {
+        print("Error changing wallpaper: \(error)")
+    }
+}
+
+func getNSImageFromURL(_ imageURL: URL) -> NSImage {
+        do {
+            let imageData = try Data(contentsOf: imageURL)
+            // Create NSImage from data
+            if let image = NSImage(data: imageData) {
+                return image
+            } else {
+                print("Failed to create NSImage from data.")
+                return NSImage()
+            }
+        } catch {
+            // Handle errors while reading file data
+            print("Error loading image from file: \(error)")
+            return NSImage()
+        }
+}
+
 func setWallpaper(url:URL, screen:NSScreen) throws {
     do {
         try NSWorkspace.shared.setDesktopImageURL(url, for:screen)

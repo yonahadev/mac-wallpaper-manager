@@ -10,6 +10,20 @@ import SwiftUI
 
 let fileManager = FileManager.default
 
+
+func removeURLFromFile(_ imageURL: URL) {
+    let urlData = readFile()
+    let urlStrings = urlData.components(separatedBy: "\n")
+    let remainingURLS = urlStrings.filter { $0 != imageURL.absoluteString}
+    clearFile()
+    for locator in remainingURLS {
+        if let currentURL = URL(string:locator) {
+            writeFile(imageURL: currentURL)
+        }
+    }
+
+}
+
 func readFile() -> String {
     let file = "wallpapers.txt"
     if let dir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {

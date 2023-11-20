@@ -73,41 +73,14 @@ struct ContentView: View {
                         VStack{
                             Button {
                                 selectedIndex = index
-                                do {
-                                    if allScreens == true {
-                                        for screen in NSScreen.screens {
-                                            try setWallpaper(url: imageURL, screen: screen)
-                                        }
-                                    } else {
-                                        let display = getScreenByName(selectedScreen)
-                                        try setWallpaper(url: imageURL, screen: display)
-                                    }
-                                } catch {
-                                    print("Error changing wallpaper: \(error)")
-                                }
+                                handleWallpaperChange(allScreens: allScreens, image: imageURL, target: selectedScreen)
                             } label: {
-                                Image(nsImage:{
-                                    do {
-                                        let imageData = try Data(contentsOf: imageURL)
-                                        // Create NSImage from data
-                                        if let image = NSImage(data: imageData) {
-                                            return image
-                                        } else {
-                                            print("Failed to create NSImage from data.")
-                                            return NSImage()
-                                        }
-                                    } catch {
-                                        // Handle errors while reading file data
-                                        print("Error loading image from file: \(error)")
-                                        return NSImage()
-                                    }
-                                }()
-                                      
-                                )
-                                .resizable()
-                                .frame(width:75,height:75)
-                                .aspectRatio(contentMode: .fit)
-                                .border(index == selectedIndex ? Color.accentColor : Color.clear, width: 1)
+                                let image = getNSImageFromURL(imageURL)
+                                Image(nsImage:image)
+                                    .resizable()
+                                    .frame(width:75,height:75)
+                                    .aspectRatio(contentMode: .fit)
+                                    .border(index == selectedIndex ? Color.accentColor : Color.clear, width: 1)
                             } .buttonStyle(PlainButtonStyle())
                             Image(systemName: "trash")
                                 .foregroundColor(.white)
@@ -116,15 +89,7 @@ struct ContentView: View {
                                 .clipShape(Circle())
                                 .onTapGesture {
                                     imageFiles.remove(at: index)
-                                    let urlData = readFile()
-                                    let urlStrings = urlData.components(separatedBy: "\n")
-                                    let remainingURLS = urlStrings.filter { $0 != imageURL.absoluteString}
-                                    clearFile()
-                                    for locator in remainingURLS {
-                                        if let currentURL = URL(string:locator) {
-                                            writeFile(imageURL: currentURL)
-                                        }
-                                    }
+                                    removeURLFromFile(imageURL)
                                 }
                         }
                         }
