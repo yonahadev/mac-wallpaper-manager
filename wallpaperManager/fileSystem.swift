@@ -27,6 +27,20 @@ func readFile() -> String {
     return ""
 }
 
+func clearFile() {
+    let file = "wallpapers.txt"
+    if let dir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let fileURL = dir.appending(path: file)
+        if fileManager.fileExists(atPath: fileURL.path()) {
+            do {
+                try Data().write(to: fileURL)
+            } catch {
+                print("Failed to clear file \(error)")
+            }
+        }
+    }
+}
+
 func writeFile(imageURL:URL) {
     let file = "wallpapers.txt"
     let stringToWrite = imageURL.absoluteString+"\n"
