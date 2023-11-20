@@ -36,13 +36,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E20324342B0BECDD00FC321C /* wallpaperManagerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallpaperManagerRelease.entitlements; sourceTree = "<group>"; };
+		E20324352B0BECDD00FC321C /* wallpaperManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallpaperManager.entitlements; sourceTree = "<group>"; };
 		E20AB9DF2B08B0E5009C8C8F /* fileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileSystem.swift; sourceTree = "<group>"; };
 		E20AB9E52B08B19A009C8C8F /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		E2C98CE92B07788700B76478 /* wallpaperManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wallpaperManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallpaperManagerApp.swift; sourceTree = "<group>"; };
 		E2C98CF02B07788800B76478 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2C98CF32B07788800B76478 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		E2C98CF52B07788800B76478 /* wallpaperManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallpaperManager.entitlements; sourceTree = "<group>"; };
 		E2C98CFA2B07788800B76478 /* wallpaperManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wallpaperManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2C98CFE2B07788800B76478 /* wallpaperManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wallpaperManagerTests.swift; sourceTree = "<group>"; };
 		E2C98D042B07788900B76478 /* wallpaperManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wallpaperManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,12 +100,13 @@
 		E2C98CEB2B07788700B76478 /* wallpaperManager */ = {
 			isa = PBXGroup;
 			children = (
+				E20324352B0BECDD00FC321C /* wallpaperManager.entitlements */,
+				E20324342B0BECDD00FC321C /* wallpaperManagerRelease.entitlements */,
 				E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */,
 				E2C98D172B0786F000B76478 /* ContentView.swift */,
 				E20AB9DF2B08B0E5009C8C8F /* fileSystem.swift */,
 				E20AB9E52B08B19A009C8C8F /* utils.swift */,
 				E2C98CF02B07788800B76478 /* Assets.xcassets */,
-				E2C98CF52B07788800B76478 /* wallpaperManager.entitlements */,
 				E2C98CF22B07788800B76478 /* Preview Content */,
 			);
 			path = wallpaperManager;
@@ -429,12 +431,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = wallpaperManager/wallpaperManager.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wallpaperManager/Preview Content\"";
 				DEVELOPMENT_TEAM = LFPDYBBY9R;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -455,13 +458,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = wallpaperManager/wallpaperManager.entitlements;
+				CODE_SIGN_ENTITLEMENTS = wallpaperManager/wallpaperManagerRelease.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"wallpaperManager/Preview Content\"";
 				DEVELOPMENT_TEAM = LFPDYBBY9R;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";

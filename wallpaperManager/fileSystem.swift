@@ -40,7 +40,6 @@ func writeFile(imageURL:URL) {
                         try fileHandler.seekToEnd()
                         try fileHandler.write(contentsOf: fileData)
                         try fileHandler.close()
-                        print("wrote to \(fileURL)")
                     }
                 } else {
                     print("Couldn't verify the integrity of the image path.")
@@ -51,7 +50,6 @@ func writeFile(imageURL:URL) {
                 print("Error is \(error)")
             }
         } else {
-            print("Created file \(fileURL)")
             fileManager.createFile(atPath: fileURL.path(), contents: data)
         }
         
