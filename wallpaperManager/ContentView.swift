@@ -11,7 +11,19 @@ import SwiftUI
 struct ContentView: View {
     @State var selectedScreen: String = getScreenByIndex(1).localizedName
     @State var allScreens: Bool = false
-    @State var imageFiles: [URL] = []
+    @State var imageFiles: [URL] = {
+        var existingURLS: [URL] = []
+        let urlData = readFile()
+        let urlStrings = urlData.components(separatedBy: "\n")
+        for string in urlStrings {
+            if string == "" {break}
+            if let currentURL = URL(string: string) {
+                existingURLS.append(currentURL)
+                print("appended \(currentURL)")
+            }
+        }
+        return existingURLS
+    }()
     @State var finderOpen: Bool = false
     @State var selectedIndex: Int = -1
         
@@ -81,10 +93,7 @@ struct ContentView: View {
                         }
                     }
                 }
-            }.frame(maxWidth: 800,maxHeight:300)
-                .background(Color.white)
-                .opacity(0.3)
-                .padding()
+            }
         }
         .background(LinearGradient(colors: [.pink,.black], startPoint: .leading, endPoint: .trailing))
         .frame(maxWidth: .infinity)

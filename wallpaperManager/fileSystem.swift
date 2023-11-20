@@ -10,9 +10,26 @@ import SwiftUI
 
 let fileManager = FileManager.default
 
+func readFile() -> String {
+    let file = "wallpapers.txt"
+    if let dir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let fileURL = dir.appending(path: file)
+        if fileManager.fileExists(atPath: fileURL.path()) {
+            do {
+                let urlStrings = try String(contentsOf: fileURL,encoding: .utf8)
+                return urlStrings
+            }
+            catch {
+                print("Couldn't read from file")
+            }
+        }
+    }
+    return ""
+}
+
 func writeFile(imageURL:URL) {
     let file = "wallpapers.txt"
-    let stringToWrite = imageURL.path()+"\n"
+    let stringToWrite = imageURL.absoluteString+"\n"
     let data = stringToWrite.data(using: .utf8)
     if let dir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
         let fileURL = dir.appending(path: file)
