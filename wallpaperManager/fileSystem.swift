@@ -8,6 +8,39 @@
 import Foundation
 import SwiftUI
 
+let fileManager = FileManager.default
+
+func writeFile(imageURL:URL) {
+    let file = "wallpapers.txt"
+    let stringToWrite = imageURL.path()+"\n"
+    let data = stringToWrite.data(using: .utf8)
+    if let dir = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+        let fileURL = dir.appending(path: file)
+        if fileManager.fileExists(atPath: fileURL.path()) {
+            do {
+                if let fileData = data {
+                    if let fileHandler = try? FileHandle(forWritingTo: fileURL) {
+                        try fileHandler.seekToEnd()
+                        try fileHandler.write(contentsOf: fileData)
+                        try fileHandler.close()
+                        print("wrote to \(fileURL)")
+                    }
+                } else {
+                    print("Couldn't verify the integrity of the image path.")
+                }
+                
+            }
+            catch {
+                print("Error is \(error)")
+            }
+        } else {
+            print("Created file \(fileURL)")
+            fileManager.createFile(atPath: fileURL.path(), contents: data)
+        }
+        
+    }
+}
+
 func parseFolder(completionHandler: @escaping ([URL]) -> Void)  {
     var files:[URL] = []
     chooseFilesAndFolders { (urls) in
@@ -47,7 +80,6 @@ func getWallpapers(filePath: URL) -> [URL] {
     do {
         let files = try FileManager.default.contentsOfDirectory(at: filePath, includingPropertiesForKeys: [.pathKey])
         for file in files {
-            print(file.pathExtension)
             if validFileExtensions.contains(file.pathExtension) {
                 validUrls.append(file)
             }
