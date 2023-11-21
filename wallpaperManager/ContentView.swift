@@ -36,34 +36,44 @@ struct ContentView: View {
                 if NSScreen.screens.count > 1 {
                     Toggle("All screens", isOn:$allScreens).padding(5)
                 }
-                Button("Import wallpapers") {
-                    finderOpen = true
-                    parseFolder { (newFiles) in
-                        var count: Int = 0
-                        var duplicateFiles: [URL] = []
-                        for file in newFiles  {
-                            var newFile = true
-                            for existingImage in imageFiles {
-                                if file == existingImage {
-                                    count+=1
-                                    duplicateFiles.append(file)
-                                    newFile = false
-                                    
+                HStack {
+                    Button("Import wallpapers") {
+                        finderOpen = true
+                        parseFolder { (newFiles) in
+                            var count: Int = 0
+                            var duplicateFiles: [URL] = []
+                            for file in newFiles  {
+                                var newFile = true
+                                for existingImage in imageFiles {
+                                    if file == existingImage {
+                                        count+=1
+                                        duplicateFiles.append(file)
+                                        newFile = false
+                                        
+                                    }
+                                }
+                                if newFile {
+                                    imageFiles.append(file)
+                                    writeFile(imageURL: file)
                                 }
                             }
-                            if newFile {
-                                imageFiles.append(file)
-                                writeFile(imageURL: file)
-                            }
+                            finderOpen = false
                         }
-                        finderOpen = false
-                    }
-                }  .disabled(finderOpen)
-                    .fontWeight(.bold)
-                    .padding(10)
-                    .buttonStyle(PlainButtonStyle())
-                    .background(Color.accentColor.opacity(0.5))
-            }.padding(10)
+                    }  .disabled(finderOpen)
+                        .fontWeight(.bold)
+                        .padding(10)
+                        .buttonStyle(PlainButtonStyle())
+                        .background(Color.accentColor.opacity(0.5))
+                    Button("Delete all") {
+                        imageFiles = []
+                        clearFile()
+                    } .disabled(finderOpen)
+                        .fontWeight(.bold)
+                        .padding(10)
+                        .buttonStyle(PlainButtonStyle())
+                        .background(Color.red.opacity(0.5))
+                }.padding(10)
+                }
             HStack {
                 HStack {
                     Text("Cycle backwards:")
@@ -97,13 +107,15 @@ struct ContentView: View {
                                 let image = getNSImageFromURL(imageURL)
                                 Image(nsImage:image)
                                     .resizable()
-                                    .frame(width:75,height:75)
-                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width:160,height:90)
+                                    .aspectRatio(contentMode: .fill)
+                                    .shadow(radius: 10)
                                     .border(index == selectedIndex ? Color.accentColor : Color.clear, width: 1)
                             } .buttonStyle(PlainButtonStyle())
                             Image(systemName: "trash")
                                 .foregroundColor(.white)
                                 .padding(7)
+                                .shadow(radius:5)
                                 .background(Color.red)
                                 .clipShape(Circle())
                                 .onTapGesture {
