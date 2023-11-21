@@ -66,6 +66,28 @@ struct ContentView: View {
                         )
                     )
             }.padding(10)
+            HStack {
+                Button("Wallpaper back") {
+                    if selectedIndex == -1 {
+                        selectedIndex = 0
+                    } else if selectedIndex == 0 {
+                        selectedIndex = imageFiles.count-1
+                    } else {
+                        selectedIndex -= 1
+                    }
+                    handleWallpaperChange(allScreens: allScreens, image: imageFiles[selectedIndex], target: selectedScreen)
+                } .keyboardShortcut(.leftArrow,modifiers: [.shift,.option])
+                Button("Wallpaper forward") {
+                    if selectedIndex == -1 {
+                        selectedIndex = 0
+                    } else if selectedIndex == imageFiles.count-1 {
+                        selectedIndex = 0
+                    } else {
+                        selectedIndex += 1
+                    }
+                    handleWallpaperChange(allScreens: allScreens, image: imageFiles[selectedIndex], target: selectedScreen)
+                } .keyboardShortcut(.rightArrow,modifiers: [.shift,.option])
+            }
             ScrollView {
                 let columns = [GridItem(.adaptive(minimum: 100,maximum: 200))]
                 LazyVGrid(columns: columns) {
