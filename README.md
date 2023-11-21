@@ -1,5 +1,7 @@
 # mac-wallpaper-manager
 MacOS app for managing wallpapers and cycling between them built natively in swift.
+
+![](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3N3NnB4dmVndm1memU0M3NrZ3p1enNvNjY3d3YxbGhteDNzM2x5biZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/B7lgGA75HGcKVYvmWt/giphy.gif)
 # Installation
 1. Click on the green `code` button and then click `open with XCode`
 2. In XCode run the program and let it build
