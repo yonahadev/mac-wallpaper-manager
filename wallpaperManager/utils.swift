@@ -10,6 +10,25 @@ import SwiftUI
 
 let validFileExtensions: Set = ["jpg","jpeg","tiff","gif","bmp","pdf","tif","png"]
 
+func cycleWallpaper(_ direction:String,selectedIndex:inout Int,imageFiles:[URL],allScreens: Bool, target:String) {
+    if selectedIndex == -1 {
+        selectedIndex = 0
+    } else if direction == "forward" {
+        if selectedIndex == imageFiles.count-1 {
+            selectedIndex = 0
+        } else {
+            selectedIndex += 1
+        }
+    } else if direction == "backward" {
+        if selectedIndex == 0 {
+            selectedIndex = imageFiles.count-1
+        } else {
+            selectedIndex -= 1
+        }
+    }
+    handleWallpaperChange(allScreens: allScreens, image: imageFiles[selectedIndex], target: target)
+}
+
 func handleWallpaperChange(allScreens:Bool,image: URL, target: String) {
     do {
         if allScreens == true {

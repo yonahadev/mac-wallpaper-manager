@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HotKey
 
 
 struct ContentView: View {
@@ -14,7 +15,11 @@ struct ContentView: View {
     @State var imageFiles: [URL] = []
     @State var finderOpen: Bool = false
     @State var selectedIndex: Int = -1
-        
+    
+    // Setup hot key for ⌥⌘R
+    let rightArrow = HotKey(key: .rightArrow, modifiers: [.command, .option])
+    let leftArrow = HotKey(key: .leftArrow, modifiers: [.command, .option])
+ 
     var body: some View {
         VStack {
             VStack {
@@ -68,25 +73,11 @@ struct ContentView: View {
             }.padding(10)
             HStack {
                 Button("Wallpaper back") {
-                    if selectedIndex == -1 {
-                        selectedIndex = 0
-                    } else if selectedIndex == 0 {
-                        selectedIndex = imageFiles.count-1
-                    } else {
-                        selectedIndex -= 1
-                    }
-                    handleWallpaperChange(allScreens: allScreens, image: imageFiles[selectedIndex], target: selectedScreen)
-                } .keyboardShortcut(.leftArrow,modifiers: [.shift,.option])
+                    cycleWallpaper("backward", selectedIndex: &selectedIndex, imageFiles: imageFiles, allScreens: allScreens, target: selectedScreen)
+                }
                 Button("Wallpaper forward") {
-                    if selectedIndex == -1 {
-                        selectedIndex = 0
-                    } else if selectedIndex == imageFiles.count-1 {
-                        selectedIndex = 0
-                    } else {
-                        selectedIndex += 1
-                    }
-                    handleWallpaperChange(allScreens: allScreens, image: imageFiles[selectedIndex], target: selectedScreen)
-                } .keyboardShortcut(.rightArrow,modifiers: [.shift,.option])
+                    cycleWallpaper("forward", selectedIndex: &selectedIndex, imageFiles: imageFiles, allScreens: allScreens, target: selectedScreen)
+                }
             }
             ScrollView {
                 let columns = [GridItem(.adaptive(minimum: 100,maximum: 200))]
@@ -122,6 +113,12 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
             .onAppear() {
+                rightArrow.keyDownHandler = {
+                    cycleWallpaper("forward", selectedIndex: &selectedIndex, imageFiles: imageFiles, allScreens: allScreens, target: selectedScreen)
+                }
+                leftArrow.keyDownHandler = {
+                    cycleWallpaper("backward", selectedIndex: &selectedIndex, imageFiles: imageFiles, allScreens: allScreens, target: selectedScreen)
+                }
                 let urlData = readFile()
                 let urlStrings = urlData.components(separatedBy: "\n")
                 for string in urlStrings {
