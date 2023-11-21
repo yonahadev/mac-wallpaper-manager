@@ -12,12 +12,10 @@ let validFileExtensions: Set = ["jpg","jpeg","tiff","gif","bmp","pdf","tif","png
 
 func toggleWindow(openWindow:OpenWindowAction, dismissWindow: DismissWindowAction,windowOpen:inout Bool) {
     if windowOpen == true {
-        print("Hiding window")
         dismissWindow(id:"mainWindow")
         NSApp.hide(nil)
         windowOpen = false
     } else {
-        print("Opening window")
         openWindow(id:"mainWindow")
         if #available(macOS 14, *) {
             NSApplication.shared.activate()

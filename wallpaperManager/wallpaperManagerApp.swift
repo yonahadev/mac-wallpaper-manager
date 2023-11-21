@@ -15,8 +15,9 @@ struct wallpaperManagerApp: App {
     @State var windowOpen = true
     let toggleHotkey = HotKey(key: .upArrow,modifiers: [.command,.option])
     var body: some Scene {
-        WindowGroup("Main Window",id: "mainWindow") {
-            ContentView() .onAppear() {
+        WindowGroup("Wallpaper Manager",id: "mainWindow") {
+            ContentView()
+                .onAppear() {
                 toggleHotkey.keyDownHandler = {
                     toggleWindow(openWindow: openWindow, dismissWindow: dismissWindow, windowOpen: &windowOpen)
                 }
@@ -25,7 +26,7 @@ struct wallpaperManagerApp: App {
             }
         }
         MenuBarExtra("Wallpaper Manager",systemImage: "photo.on.rectangle") {
-            Button("Launch Wallpaper Manager") {
+            Button("Launch Wallpaper Manager ⌘⌥↑") {
                 toggleWindow(openWindow: openWindow, dismissWindow: dismissWindow, windowOpen: &windowOpen)
 
                 }

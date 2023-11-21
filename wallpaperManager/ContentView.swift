@@ -59,26 +59,32 @@ struct ContentView: View {
                         finderOpen = false
                     }
                 }  .disabled(finderOpen)
+                    .fontWeight(.bold)
                     .padding(10)
                     .buttonStyle(PlainButtonStyle())
-                    .background(.blue)
-                    .clipShape(
-                        .rect(
-                            topLeadingRadius: 5,
-                            bottomLeadingRadius: 5,
-                            bottomTrailingRadius: 5,
-                            topTrailingRadius: 5
-                        )
-                    )
+                    .background(Color.accentColor.opacity(0.5))
             }.padding(10)
             HStack {
-                Button("Wallpaper back") {
-                    cycleWallpaper("backward", selectedIndex: &selectedIndex, imageFiles: imageFiles, allScreens: allScreens, target: selectedScreen)
+                HStack {
+                    Text("Cycle backwards:")
+                    Text("⌘⌥←")
+                        .fontWeight(.bold)
+                        .background(Color.accentColor.opacity(0.5))
                 }
-                Button("Wallpaper forward") {
-                    cycleWallpaper("forward", selectedIndex: &selectedIndex, imageFiles: imageFiles, allScreens: allScreens, target: selectedScreen)
+                HStack {
+                    Text("Cycle Forwards:")
+                    Text("⌘⌥→")
+                        .fontWeight(.bold)
+                        .background(Color.accentColor.opacity(0.5))
                 }
-            }
+                HStack {
+                    Text("Toggle window:")
+                    Text("⌘⌥↑")
+                        .fontWeight(.bold)
+                        .background(Color.accentColor.opacity(0.5))
+                        
+                }
+            } .padding(5)
             ScrollView {
                 let columns = [GridItem(.adaptive(minimum: 100,maximum: 200))]
                 LazyVGrid(columns: columns) {
