@@ -10,6 +10,25 @@ import SwiftUI
 
 let validFileExtensions: Set = ["jpg","jpeg","tiff","gif","bmp","pdf","tif","png"]
 
+func toggleWindow(openWindow:OpenWindowAction, dismissWindow: DismissWindowAction,windowOpen:inout Bool) {
+    if windowOpen == true {
+        print("Hiding window")
+        dismissWindow(id:"mainWindow")
+        NSApp.hide(nil)
+        windowOpen = false
+    } else {
+        print("Opening window")
+        openWindow(id:"mainWindow")
+        if #available(macOS 14, *) {
+            NSApplication.shared.activate()
+            NSApp.activate()
+        } else {
+            NSApp.activate(ignoringOtherApps: true)
+        }
+        windowOpen = true
+    }
+}
+
 func cycleWallpaper(_ direction:String,selectedIndex:inout Int,imageFiles:[URL],allScreens: Bool, target:String) {
     if selectedIndex == -1 {
         selectedIndex = 0

@@ -39,6 +39,7 @@
 /* Begin PBXFileReference section */
 		E20324342B0BECDD00FC321C /* wallpaperManagerRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallpaperManagerRelease.entitlements; sourceTree = "<group>"; };
 		E20324352B0BECDD00FC321C /* wallpaperManager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = wallpaperManager.entitlements; sourceTree = "<group>"; };
+		E20324392B0CC32A00FC321C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		E20AB9DF2B08B0E5009C8C8F /* fileSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileSystem.swift; sourceTree = "<group>"; };
 		E20AB9E52B08B19A009C8C8F /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 		E2C98CE92B07788700B76478 /* wallpaperManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wallpaperManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +103,7 @@
 		E2C98CEB2B07788700B76478 /* wallpaperManager */ = {
 			isa = PBXGroup;
 			children = (
+				E20324392B0CC32A00FC321C /* Info.plist */,
 				E20324352B0BECDD00FC321C /* wallpaperManager.entitlements */,
 				E20324342B0BECDD00FC321C /* wallpaperManagerRelease.entitlements */,
 				E2C98CEC2B07788700B76478 /* wallpaperManagerApp.swift */,
@@ -448,6 +450,8 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = wallpaperManager/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -476,6 +480,8 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = wallpaperManager/Info.plist;
+				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
